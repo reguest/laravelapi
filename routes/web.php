@@ -17,9 +17,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['namespace'=>'api','prefix'=>'api'],function (){
+   Route::group(['namespace'=>'authenticate','prefix'=>'authenticate'],function (){
+       Route::post('/register','indexController@register');
+       Route::post('/login','indexController@login');
+   });
 
-Route::group(['namespace'=>'api','prefix'=>'api'],function(){
-    Route::group(['namespace'=>'authenticate','prefix'=>'authenticate'],function(){
-        Route::post('/register','indexController@register');
+   Route::group(['namespace'=>'comment','prefix'=>'comment'],function(){
+        Route::post('/create','indexController@create');
+        Route::post('/update','indexController@update');
+        Route::post('/delete','indexController@delete');
+   });
+
+
+    Route::group(['namespace'=>'data','prefix'=>'data'],function (){
+        Route::post('/create','indexController@create');
+        Route::post('/update','indexController@update');
+        Route::post('/delete','indexController@delete');
+        Route::get('/detail/{token}/{dataId}','indexController@detail');
+        Route::get('/list/{token}','indexController@list');
     });
 });
+
